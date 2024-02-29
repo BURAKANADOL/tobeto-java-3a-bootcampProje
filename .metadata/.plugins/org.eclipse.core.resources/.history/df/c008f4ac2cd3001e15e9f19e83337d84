@@ -1,0 +1,11 @@
+package com.tobeto.bootcampProject.service.applicant.applicant;
+
+import com.tobeto.bootcampProject.model.entities.Applicant;
+
+import java.util.List;
+
+public interface ApplicantService {
+    Applicant getById(final Integer applicantId);
+
+    List<Applicant> getAllApplicants();
+}

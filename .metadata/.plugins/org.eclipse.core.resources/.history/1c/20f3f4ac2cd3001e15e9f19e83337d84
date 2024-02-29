@@ -1,0 +1,5 @@
+package com.tobeto.bootcampProject.service.applicant.applicant;
+
+public interface ApplicantDeleteService {
+
+}

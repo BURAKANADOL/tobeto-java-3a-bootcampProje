@@ -1,0 +1,5 @@
+package com.tobeto.bootcampProject.model.entities;
+
+public class Applicant {
+
+}

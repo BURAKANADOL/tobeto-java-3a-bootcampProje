@@ -1,0 +1,12 @@
+package com.tobeto.bootcampProject.service.applicant.applicant;
+
+import com.tobeto.bootcampProject.model.dto.applicant.request.ApplicantUpdateRequest;
+import com.tobeto.bootcampProject.model.entities.Applicant;
+
+public interface ApplicantUppdateService {
+    Applicant update(
+            final Integer applicantId,
+            final ApplicantUpdateRequest applicantUpdateRequest
+    );
+
+}
