@@ -9,8 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PageDto {
     private String sortDirection;
-    private String[] sortBy;
+    private  String[] sortBy;
     private int pageNumber;
     private int pageSize;
-
 }

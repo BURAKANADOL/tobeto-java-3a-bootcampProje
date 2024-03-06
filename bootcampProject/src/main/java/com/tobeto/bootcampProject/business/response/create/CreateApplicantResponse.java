@@ -4,9 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 public class CreateApplicantResponse {
-    public String about;
+    private int id;
+    private String userName;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String about;
 }

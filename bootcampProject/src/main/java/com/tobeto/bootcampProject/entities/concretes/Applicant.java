@@ -6,18 +6,23 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "applicants")
 @EqualsAndHashCode(callSuper = true)
-@PrimaryKeyJoinColumn(name = "userId")
-public class Applicant extends User{
+@PrimaryKeyJoinColumn(name = "id")
+public class Applicant extends User {
 
     @Column(name = "about")
     private String about;
-    @OneToOne(mappedBy = "applicant", cascade = CascadeType.ALL)
+
+    @OneToOne(mappedBy = "applicant", cascade = CascadeType.REMOVE)
     private BlackList blackList;
 
+    @OneToMany(mappedBy = "applicant", cascade = CascadeType.REMOVE)
+    private List<Application> applications;
 }

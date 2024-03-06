@@ -2,47 +2,48 @@ package com.tobeto.bootcampProject.webAppi.controllers;
 
 import com.tobeto.bootcampProject.business.abstracts.InstructorService;
 import com.tobeto.bootcampProject.business.request.create.CreateInstructorRequest;
-import com.tobeto.bootcampProject.business.response.create.CreateInstructorResponse;
-import com.tobeto.bootcampProject.business.response.get.instructor.GetAllInstructorResponse;
-import com.tobeto.bootcampProject.business.response.get.instructor.GetInstructorResponse;
+import com.tobeto.bootcampProject.business.request.update.UpdateInstructorRequest;
 import com.tobeto.bootcampProject.core.utilities.paging.PageDto;
-import com.tobeto.bootcampProject.core.utilities.results.DataResult;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
-import java.util.List;
 @RestController
 @RequestMapping("/api/instructors")
 @AllArgsConstructor
-public class InstructorController {
+public class InstructorController extends BaseController {
 
-    private InstructorService  instructorService;
-    @PostMapping()
-    public CreateInstructorResponse addinstructor(@RequestBody CreateInstructorRequest request){
-        CreateInstructorResponse result =instructorService.add(request);
-        return  result;
+    private InstructorService instructorService;
 
+    @PostMapping
+    public ResponseEntity<?> add(@RequestBody @Valid CreateInstructorRequest request) {
+        return handleDataResult(instructorService.add(request));
     }
 
-    @GetMapping("getallinstructor")
-    public List<GetAllInstructorResponse> getAllInstructor(){
-
-        return instructorService.getAllInstructor();
+    @GetMapping("getAll")
+    public ResponseEntity<?> getAll() {
+        return handleDataResult(instructorService.getAll());
     }
 
-    @GetMapping("getbyCompanyName/{companyName}")
-    public GetInstructorResponse getByCompanyName(@PathVariable String companyName){
-        return instructorService.getByCompanyName(companyName);
+    @GetMapping("getById/{id}")
+    public ResponseEntity<?> getById(@PathVariable int id) {
+        return handleDataResult(instructorService.getById(id));
     }
 
-    //@GetMapping("sort")
-    // public ResponseEntity <?> getAllPage (@RequestBody PageDto pageDto){
-    //   return handleDataResult(instructorService.getAllPage(pageDto));
-    //}
+    @DeleteMapping("delete/{id}")
+    public ResponseEntity<?> delete(@PathVariable int id) {
+        return handleResult(instructorService.delete(id));
+    }
 
+    @PutMapping("update")
+    public ResponseEntity<?> update(@RequestBody @Valid UpdateInstructorRequest request) {
+        return handleDataResult(instructorService.update(request));
+    }
 
+    @GetMapping("sort")
+    public ResponseEntity<?> getAllPage(@RequestBody PageDto pageDto) {
+        return handleDataResult(instructorService.getAllPage(pageDto));
+    }
 
 }

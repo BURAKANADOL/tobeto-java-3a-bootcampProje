@@ -1,20 +1,25 @@
 package com.tobeto.bootcampProject.core.utilities.results;
 
+
+
 public class Result {
-    private boolean success; //true
-    private  String message; //eklendi
 
-    public Result (boolean success){
-        this.success=success;
+    private boolean success;
+    private String message;
 
+    public Result(boolean success){
+        this.success = success;
     }
-    public Result(boolean success,String message){
+
+    public Result(boolean success, String message){
         this(success);
-        this.message=message;
+        this.message = message;
     }
-    public  boolean isSuccess(){
-        return  success;
+
+    public boolean isSuccess(){
+        return success;
     }
+
     public String getMessage(){
         return message;
     }

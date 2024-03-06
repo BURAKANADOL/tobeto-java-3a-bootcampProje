@@ -1,15 +1,28 @@
 package com.tobeto.bootcampProject.business.abstracts;
 
-import com.tobeto.bootcampProject.business.requests.create.applicant.CreateApplicantRequest;
-import com.tobeto.bootcampProject.business.response.create.Applicant.CreateApplicantResponse;
-import com.tobeto.bootcampProject.business.response.get.Applicant.GetAllApplicantResponse;
-import com.tobeto.bootcampProject.business.response.get.Applicant.GetApplicantResponse;
+import com.tobeto.bootcampProject.business.request.create.CreateApplicantRequest;
+import com.tobeto.bootcampProject.business.request.update.UpdateApplicantRequest;
+import com.tobeto.bootcampProject.business.response.create.CreateApplicantResponse;
+import com.tobeto.bootcampProject.business.response.get.applicant.GetAllApplicantResponse;
+import com.tobeto.bootcampProject.business.response.get.applicant.GetApplicantResponse;
+import com.tobeto.bootcampProject.business.response.update.UpdateApplicantResponse;
+import com.tobeto.bootcampProject.core.utilities.paging.PageDto;
+import com.tobeto.bootcampProject.core.utilities.results.DataResult;
+import com.tobeto.bootcampProject.core.utilities.results.Result;
 
 import java.util.List;
 
 public interface ApplicantService {
-    CreateApplicantResponse  add(CreateApplicantRequest  request);
-    List<GetAllApplicantResponse> getAllApplicant();
-    GetApplicantResponse  getByAbout(String about);
+    DataResult<CreateApplicantResponse> add(CreateApplicantRequest request);
+
+    DataResult<List<GetAllApplicantResponse>> getAll();
+
+    DataResult<GetApplicantResponse> getById(int id);
+
+    Result delete(int id);
+
+    DataResult<UpdateApplicantResponse> update(UpdateApplicantRequest request);
+
+    DataResult<List<GetAllApplicantResponse>> getAllPage(PageDto pageDto);
 
 }

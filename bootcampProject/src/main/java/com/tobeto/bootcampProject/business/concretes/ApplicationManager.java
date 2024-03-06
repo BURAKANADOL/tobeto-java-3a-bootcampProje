@@ -1,50 +1,116 @@
 package com.tobeto.bootcampProject.business.concretes;
 
+
 import com.tobeto.bootcampProject.business.abstracts.ApplicationService;
+import com.tobeto.bootcampProject.business.constants.ApplicationMessage;
 import com.tobeto.bootcampProject.business.request.create.CreateApplicationRequest;
+import com.tobeto.bootcampProject.business.request.update.UpdateApplicationRequest;
 import com.tobeto.bootcampProject.business.response.create.CreateApplicationResponse;
 import com.tobeto.bootcampProject.business.response.get.application.GetAllApplicationResponse;
 import com.tobeto.bootcampProject.business.response.get.application.GetApplicationResponse;
+import com.tobeto.bootcampProject.business.response.update.UpdateApplicationResponse;
 import com.tobeto.bootcampProject.core.utilities.mapping.ModelMapperService;
+import com.tobeto.bootcampProject.core.utilities.paging.PageDto;
+import com.tobeto.bootcampProject.core.utilities.results.DataResult;
+import com.tobeto.bootcampProject.core.utilities.results.Result;
+import com.tobeto.bootcampProject.core.utilities.results.SuccessDataResult;
+import com.tobeto.bootcampProject.core.utilities.results.SuccessResult;
 import com.tobeto.bootcampProject.dataAccess.abstracts.ApplicationRepository;
 import com.tobeto.bootcampProject.entities.concretes.Application;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
-
 
 @Service
 @AllArgsConstructor
 public class ApplicationManager implements ApplicationService {
+
     private ApplicationRepository applicationRepository;
     private ModelMapperService mapperService;
 
     @Override
-    public CreateApplicationResponse add(CreateApplicationRequest request) {
+    public DataResult<CreateApplicationResponse> add(CreateApplicationRequest request) {
+
         Application application = mapperService.forRequest().map(request, Application.class);
-        application.setId(request.getId());
+        application.setCreatedDate(LocalDateTime.now());
         applicationRepository.save(application);
-        CreateApplicationResponse response = mapperService.forResponse().map(application, CreateApplicationResponse.class);
-        return response;
+
+        CreateApplicationResponse response = mapperService.forResponse()
+                .map(application, CreateApplicationResponse.class);
+
+        return new SuccessDataResult<CreateApplicationResponse>
+                (response, ApplicationMessage.ApplicationAdded);
     }
 
     @Override
-    public List<GetAllApplicationResponse> getAllApplication() {
+    public DataResult<List<GetAllApplicationResponse>> getAll() {
+
         List<Application> applications = applicationRepository.findAll();
-        List<GetAllApplicationResponse> ApplicationResponses = applications.stream().map(application ->
-                        mapperService.forResponse().map(application, GetAllApplicationResponse.class))
-                .collect(Collectors.toList());
+        List<GetAllApplicationResponse> applicationResponses = applications.stream()
+                .map(application -> mapperService.forResponse()
+                        .map(application, GetAllApplicationResponse.class)).toList();
 
-
-        return applicationResponse;
+        return new SuccessDataResult<List<GetAllApplicationResponse>>
+                (applicationResponses, ApplicationMessage.AllApplicationsListed);
     }
 
     @Override
-    public GetApplicationResponse getById(int id) {
+    public DataResult<GetApplicationResponse> getById(int id) {
+
         Application application = applicationRepository.getById(id);
-        GetApplicationResponse response = mapperService.forResponse().map(application, GetApplicationResponse.class);
-        return response;
+        GetApplicationResponse response = mapperService.forResponse()
+                .map(application, GetApplicationResponse.class);
+
+        return new SuccessDataResult<GetApplicationResponse>
+                (response, ApplicationMessage.ApplicationListed);
+    }
+
+    @Override
+    public Result delete(int id) {
+
+        Application application = applicationRepository.getById(id);
+        applicationRepository.delete(application);
+
+        return new SuccessResult(ApplicationMessage.ApplicationDeleted);
+    }
+
+    @Override
+    public DataResult<UpdateApplicationResponse> update(UpdateApplicationRequest request) {
+
+        Application application = applicationRepository.getById(request.getId());
+        Application updatedApplication = mapperService.forRequest()
+                .map(request, Application.class);
+
+        application.setApplicant(updatedApplication.getApplicant() != null ? updatedApplication.getApplicant() : application.getApplicant());
+        application.setBootcamp(updatedApplication.getBootcamp() != null ? updatedApplication.getBootcamp() : application.getBootcamp());
+        application.setApplicationState(updatedApplication.getApplicationState() != null ? updatedApplication.getApplicationState() : application.getApplicationState());
+        application.setUpdatedDate(LocalDateTime.now());
+        applicationRepository.save(application);
+
+        UpdateApplicationResponse response = mapperService.forResponse()
+                .map(application, UpdateApplicationResponse.class);
+
+        return new SuccessDataResult<UpdateApplicationResponse>
+                (response, ApplicationMessage.ApplicationUpdated);
+    }
+
+    @Override
+    public DataResult<List<GetAllApplicationResponse>> getAllPage(PageDto pageDto) {
+
+        Sort sort = Sort.by(Sort.Direction.fromString(pageDto.getSortDirection()), pageDto.getSortBy());
+        Pageable pageable = PageRequest.of(pageDto.getPageNumber(), pageDto.getPageSize(), sort);
+        Page<Application> applications = applicationRepository.findAll(pageable);
+
+        List<GetAllApplicationResponse> responses = applications.stream()
+                .map(application -> mapperService.forResponse()
+                        .map(application, GetAllApplicationResponse.class)).toList();
+
+        return new SuccessDataResult<List<GetAllApplicationResponse>>(responses);
     }
 }

@@ -1,16 +1,22 @@
 package com.tobeto.bootcampProject.core.exception.problemDetails;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.springframework.http.HttpStatus;
 
 import java.util.Map;
 @Data
-public class ValidationProblemDetails extends ProblemDetails{
-    public ValidationProblemDetails (){
+@AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
+public class ValidationProblemDetails extends ProblemDetails {
+
+    public ValidationProblemDetails() {
         setTitle("Validation Rule Violation");
-        setDetail("Validasyon Problemi");
         setType("http://tobeto.com/exceptions/validation");
+        setDetail("Validation Problem");
         setStatus(HttpStatus.BAD_REQUEST.toString());
     }
-    private Map<String , String> errors;
+
+    private Map<String, String> errors;  // hangi alanda ne hatası var
 }

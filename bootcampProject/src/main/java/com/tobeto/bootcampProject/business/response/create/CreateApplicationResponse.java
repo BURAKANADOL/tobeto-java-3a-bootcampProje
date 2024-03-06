@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class CreateApplicationResponse {
-    private  int id;
-
-
+    private int id;
+    private int applicantId;
+    private int bootcampId;
+    private int applicationStateId;
 }

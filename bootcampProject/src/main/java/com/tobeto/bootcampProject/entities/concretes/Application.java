@@ -8,23 +8,22 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "applications")
-
+@EqualsAndHashCode(callSuper = true)
 public class Application extends BaseEntity<Integer> {
 
     @ManyToOne
     @JoinColumn(name = "applicantId")
-    private User applicant;
-    @ManyToOne
-    @JoinColumn(name = "applicationStateId")
-    private ApplicationState applicationState;
+    private Applicant applicant;
 
     @ManyToOne
     @JoinColumn(name = "bootcampId")
     private Bootcamp bootcamp;
 
-
+    @ManyToOne
+    @JoinColumn(name = "applicationStateId")
+    private ApplicationState applicationState;
 }

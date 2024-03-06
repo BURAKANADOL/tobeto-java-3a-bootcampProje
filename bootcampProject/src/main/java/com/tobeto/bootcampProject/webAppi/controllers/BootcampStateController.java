@@ -2,30 +2,48 @@ package com.tobeto.bootcampProject.webAppi.controllers;
 
 import com.tobeto.bootcampProject.business.abstracts.BootcampStateService;
 import com.tobeto.bootcampProject.business.request.create.CreateBootcampStateRequest;
-import com.tobeto.bootcampProject.business.response.create.CreateBootcampStateResponse;
-import com.tobeto.bootcampProject.business.response.get.bootcampState.GetAllBootcampStateResponse;
-import com.tobeto.bootcampProject.business.response.get.bootcampState.GetBootcampStateResponse;
+import com.tobeto.bootcampProject.business.request.update.UpdateBootcampStateRequest;
+import com.tobeto.bootcampProject.core.utilities.paging.PageDto;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
+
 @RestController
-@RequestMapping("/api/bootcampState")
+@RequestMapping("/api/bootcampStates")
 @AllArgsConstructor
-public class BootcampStateController {
+public class BootcampStateController extends BaseController {
+
     private BootcampStateService bootcampStateService;
-    @PostMapping()
-    public CreateBootcampStateResponse add(@RequestBody CreateBootcampStateRequest request){
-        CreateBootcampStateResponse result =bootcampStateService.add(request);
-        return  result;
 
-    }
-    @GetMapping("getall")
-    public List<GetAllBootcampStateResponse> getAll(){
-        return bootcampStateService.getAllBootcampState();
+    @PostMapping
+    public ResponseEntity<?> add(@RequestBody CreateBootcampStateRequest request) {
+        return handleDataResult(bootcampStateService.add(request));
     }
 
-    @GetMapping("getbyId/{id}")
-    public GetBootcampStateResponse getById(@PathVariable int id){
-        return bootcampStateService.getById(id);
+    @GetMapping("getAll")
+    public ResponseEntity<?> getAll() {
+        return handleDataResult(bootcampStateService.getAll());
     }
+
+    @GetMapping("getById/{id}")
+    public ResponseEntity<?> getById(@PathVariable int id) {
+        return handleDataResult(bootcampStateService.getById(id));
+    }
+
+    @DeleteMapping("delete/{id}")
+    public ResponseEntity<?> delete(@PathVariable int id) {
+        return handleResult(bootcampStateService.delete(id));
+    }
+
+    @PutMapping("update")
+    public ResponseEntity<?> update(@RequestBody UpdateBootcampStateRequest request) {
+        return handleDataResult(bootcampStateService.update(request));
+    }
+
+    @GetMapping("sort")
+    public ResponseEntity<?> getAllPage(@RequestBody PageDto pageDto) {
+        return handleDataResult(bootcampStateService.getAllPage(pageDto));
+    }
+
+
 }

@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.boot.context.properties.bind.Name;
 
 import java.time.LocalDateTime;
 
@@ -12,16 +11,19 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Data
 @MappedSuperclass
-public class BaseEntity <T> {
+public class BaseEntity<T>{
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name="id")
     private T id;
-    @Column(name = "createdDate")
-    private LocalDateTime createdDate;
-    @Column(name = "updatedDate")
-    private LocalDateTime updatedDate;
-    @Column(name = "deletedDate")
-    private LocalDateTime deletedDate;
 
+    @Column(name="createdDate")
+    private LocalDateTime createdDate;
+
+    @Column(name="updatedDate")
+    private LocalDateTime updatedDate;
+
+    @Column(name="deletedDate")
+    private LocalDateTime deletedDate;
 }

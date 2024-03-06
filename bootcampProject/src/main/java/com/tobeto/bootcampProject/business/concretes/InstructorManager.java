@@ -10,7 +10,6 @@ import com.tobeto.bootcampProject.core.utilities.mapping.ModelMapperService;
 import com.tobeto.bootcampProject.core.utilities.paging.PageDto;
 import com.tobeto.bootcampProject.core.utilities.results.DataResult;
 import com.tobeto.bootcampProject.core.utilities.results.SuccessDataResult;
-import com.tobeto.bootcampProject.dataAccess.abstracts.InstructorRepository;
 import com.tobeto.bootcampProject.entities.concretes.Instructor;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;

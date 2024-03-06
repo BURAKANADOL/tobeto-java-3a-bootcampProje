@@ -1,44 +1,48 @@
 package com.tobeto.bootcampProject.webAppi.controllers;
 
-import com.tobeto.bootcampProject.business.abstracts.ApplicationService;
 import com.tobeto.bootcampProject.business.abstracts.ApplicationStateService;
-import com.tobeto.bootcampProject.business.abstracts.UserService;
-import com.tobeto.bootcampProject.business.request.create.CreateApplicationRequest;
 import com.tobeto.bootcampProject.business.request.create.CreateApplicationStateRequest;
-import com.tobeto.bootcampProject.business.request.create.CreateUserRequest;
-import com.tobeto.bootcampProject.business.response.create.CreateApplicationResponse;
-import com.tobeto.bootcampProject.business.response.create.CreateApplicationStateResponse;
-import com.tobeto.bootcampProject.business.response.create.CreateUserResponse;
-import com.tobeto.bootcampProject.business.response.get.application.GetAllApplicationResponse;
-import com.tobeto.bootcampProject.business.response.get.application.GetApplicationResponse;
-import com.tobeto.bootcampProject.business.response.get.applicationState.GetAllApplicationStateResponse;
-import com.tobeto.bootcampProject.business.response.get.applicationState.GetApplicationStateResponse;
-import com.tobeto.bootcampProject.business.response.get.user.GetAllUserResponse;
-import com.tobeto.bootcampProject.business.response.get.user.GetUserResponse;
+import com.tobeto.bootcampProject.business.request.update.UpdateApplicationStateRequest;
+import com.tobeto.bootcampProject.core.utilities.paging.PageDto;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 @RestController
-@RequestMapping("/api/applicationState")
+@RequestMapping("/api/applicationStates")
 @AllArgsConstructor
-public class ApplicationStateController {
+public class ApplicationStateController extends BaseController {
+
     private ApplicationStateService applicationStateService;
 
-    @PostMapping()
-    public CreateApplicationStateResponse add(@RequestBody CreateApplicationStateRequest request) {
-        CreateApplicationStateResponse result = applicationStateService.add(request);
-        return result;
-
+    @PostMapping
+    public ResponseEntity<?> add(@RequestBody CreateApplicationStateRequest request) {
+        return handleDataResult(applicationStateService.add(request));
     }
 
     @GetMapping("getall")
-    public List<GetAllApplicationStateResponse> getAll() {
-        return applicationStateService.getAllApplicationState();
+    public ResponseEntity<?> getAll() {
+        return handleDataResult(applicationStateService.getAll());
     }
 
-    @GetMapping("getbyId/{id}")
-    public GetApplicationStateResponse getById(@PathVariable int id) {
-        return applicationStateService.getById(id);
+    @GetMapping("getbyid/{id}")
+    public ResponseEntity<?> getById(@PathVariable int id) {
+        return handleDataResult(applicationStateService.getById(id));
     }
+
+    @DeleteMapping("delete/{id}")
+    public ResponseEntity<?> delete(@PathVariable int id) {
+        return handleResult(applicationStateService.delete(id));
+    }
+
+    @PutMapping("update")
+    public ResponseEntity<?> update(@RequestBody UpdateApplicationStateRequest request) {
+        return handleDataResult(applicationStateService.update(request));
+    }
+
+    @GetMapping("sort")
+    public ResponseEntity<?> getAllPage(@RequestBody PageDto pageDto){
+        return handleDataResult(applicationStateService.getAllPage(pageDto));
+    }
+
 }

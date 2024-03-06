@@ -2,35 +2,46 @@ package com.tobeto.bootcampProject.webAppi.controllers;
 
 import com.tobeto.bootcampProject.business.abstracts.ApplicationService;
 import com.tobeto.bootcampProject.business.request.create.CreateApplicationRequest;
-import com.tobeto.bootcampProject.business.response.create.CreateApplicationResponse;
-import com.tobeto.bootcampProject.business.response.get.applicant.GetApplicantResponse;
-import com.tobeto.bootcampProject.business.response.get.application.GetAllApplicationResponse;
-import com.tobeto.bootcampProject.business.response.get.application.GetApplicationResponse;
+import com.tobeto.bootcampProject.business.request.update.UpdateApplicationRequest;
+import com.tobeto.bootcampProject.core.utilities.paging.PageDto;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
-@RequestMapping("/api/application")
+@RequestMapping("/api/applications")
 @AllArgsConstructor
-public class ApplicationController {
+public class ApplicationController extends BaseController {
+
     private ApplicationService applicationService;
 
-    @PostMapping()
-    public CreateApplicationResponse add(@RequestBody CreateApplicationRequest request) {
-        CreateApplicationResponse result = applicationService.add(request);
-        return result;
-
+    @PostMapping
+    public ResponseEntity<?> add(@RequestBody CreateApplicationRequest request) {
+        return handleDataResult(applicationService.add(request));
     }
 
     @GetMapping("getall")
-    public List<GetAllApplicationResponse> getAll() {
-        return applicationService.getAllApplication();
+    public ResponseEntity<?> getAll() {
+        return handleDataResult(applicationService.getAll());
     }
 
-    @GetMapping("getbyId/{id}")
-    public GetApplicationResponse getById(@PathVariable int id) {
-        return applicationService.getById(id);
+    @GetMapping("getbyid/{id}")
+    public ResponseEntity<?> getById(@PathVariable int id) {
+        return handleDataResult(applicationService.getById(id));
+    }
+
+    @DeleteMapping("delete/{id}")
+    public ResponseEntity<?> delete(@PathVariable int id) {
+        return handleResult(applicationService.delete(id));
+    }
+
+    @PutMapping("update")
+    public ResponseEntity<?> update(@RequestBody UpdateApplicationRequest request) {
+        return handleDataResult(applicationService.update(request));
+    }
+
+    @GetMapping("sort")
+    public ResponseEntity<?> getAllPage(@RequestBody PageDto pageDto){
+        return handleDataResult(applicationService.getAllPage(pageDto));
     }
 }

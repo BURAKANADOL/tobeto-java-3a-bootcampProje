@@ -1,6 +1,10 @@
 package com.tobeto.bootcampProject.business.constants;
 
 public class ApplicantMessage {
-    public static final String ApplicantAdded = "Applicant Added Successfully";
-    public static final String ApplicantListed = "Applicant Listed Successfully";
+    public static final String ApplicantAdded = "Applicant added succesfully.";
+    public static final String ApplicantListed = "Applicant listed succesfully.";
+    public static final String AllApplicantsListed = "All applicants listed succesfully.";
+    public static final String ApplicantDeleted = "Applicant deleted succesfully.";
+    public static final String ApplicantUpdated = "Applicant updated succesfully.";
+
 }

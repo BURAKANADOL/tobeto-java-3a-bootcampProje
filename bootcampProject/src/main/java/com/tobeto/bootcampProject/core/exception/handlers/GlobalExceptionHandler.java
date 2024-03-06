@@ -4,7 +4,6 @@ import com.tobeto.bootcampProject.core.exception.problemDetails.BusinessProblemD
 import com.tobeto.bootcampProject.core.exception.problemDetails.InternalServerErrorProblemDetail;
 import com.tobeto.bootcampProject.core.exception.problemDetails.ValidationProblemDetails;
 import com.tobeto.bootcampProject.core.exception.types.BusinessException;
-
 import com.tobeto.bootcampProject.core.exception.types.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -21,32 +20,32 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler({BusinessException.class})
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
-
-    public BusinessProblemDetails handleBusinessException(BusinessException businessException){
-        BusinessProblemDetails businessProblemDetails =new BusinessProblemDetails();
+    public BusinessProblemDetails handleBusinessException(BusinessException businessException) {
+        BusinessProblemDetails businessProblemDetails = new BusinessProblemDetails();
         businessProblemDetails.setDetail(businessException.getMessage());
         return businessProblemDetails;
-
     }
-    @ExceptionHandler ({MethodArgumentNotValidException.class})
-    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
 
-    public ValidationProblemDetails handleValidationException
-            (MethodArgumentNotValidException exception){
-        Map<String,String> validationErrors=new HashMap<>();
-        exception.getBindingResult().getFieldErrors().stream().
-                map(error -> validationErrors.put(error.getField(),
-                        error.getDefaultMessage())).collect(Collectors.toList());
-        ValidationProblemDetails validationProblemDetails =new ValidationProblemDetails();
+    @ExceptionHandler({MethodArgumentNotValidException.class})
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    public ValidationProblemDetails handleValidationException(MethodArgumentNotValidException exception) {
+        Map<String, String> validationErrors = new HashMap<>();
+        exception.getBindingResult().getFieldErrors().stream()
+                .map(error -> validationErrors.put(error.getField(),error.getDefaultMessage()))
+                .collect(Collectors.toList());
+
+        ValidationProblemDetails validationProblemDetails = new ValidationProblemDetails();
         validationProblemDetails.setErrors(validationErrors);
         return validationProblemDetails;
     }
+
     @ExceptionHandler({DataIntegrityViolationException.class})
     @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
-    public InternalServerErrorProblemDetail
-    handleDataIntegrityViolationException(DataIntegrityViolationException exception){
+    public InternalServerErrorProblemDetail handleDataIntegrityViolationException(
+            DataIntegrityViolationException exception) {
         InternalServerErrorProblemDetail detail = new InternalServerErrorProblemDetail();
         detail.setDetail(exception.getMessage());
         return detail;
     }
+
 }

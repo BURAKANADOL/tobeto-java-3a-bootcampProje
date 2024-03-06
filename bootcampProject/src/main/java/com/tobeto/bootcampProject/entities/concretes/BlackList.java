@@ -7,17 +7,23 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
+
+@EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "instructors")
-@EqualsAndHashCode(callSuper = true)
+@Table(name = "blacklists")
 public class BlackList extends BaseEntity<Integer> {
+
     @Column(name = "reason")
     private String reason;
+
     @Column(name = "date")
-    private  String date;
+    private LocalDateTime date;
+
     @OneToOne
     @JoinColumn(name = "applicantId")
     private Applicant applicant;

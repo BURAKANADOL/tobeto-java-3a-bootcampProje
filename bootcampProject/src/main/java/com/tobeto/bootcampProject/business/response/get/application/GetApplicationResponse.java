@@ -8,5 +8,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GetApplicationResponse {
-    private  int id;
+    private int id;
+    private String applicantFirstName;
+    private String bootcampName;
+    private String applicationStateName;
 }

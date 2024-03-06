@@ -10,17 +10,16 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
-@Table(name = "applicationsStates")
-@EqualsAndHashCode
+@Table(name = "applicationStates")
+@EqualsAndHashCode(callSuper = true)
 public class ApplicationState extends BaseEntity<Integer> {
 
     @Column(name = "name")
-    private  String name;
+    private String name;
 
     @OneToMany(mappedBy = "applicationState")
     private List<Application> applications;
-
 }

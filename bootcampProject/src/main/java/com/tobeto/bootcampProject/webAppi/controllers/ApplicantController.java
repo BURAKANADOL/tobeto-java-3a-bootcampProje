@@ -2,40 +2,47 @@ package com.tobeto.bootcampProject.webAppi.controllers;
 
 import com.tobeto.bootcampProject.business.abstracts.ApplicantService;
 import com.tobeto.bootcampProject.business.request.create.CreateApplicantRequest;
-import com.tobeto.bootcampProject.business.response.create.CreateApplicantResponse;
-import com.tobeto.bootcampProject.business.response.get.applicant.GetAllApplicantResponse;
-import com.tobeto.bootcampProject.business.response.get.applicant.GetApplicantResponse;
+import com.tobeto.bootcampProject.business.request.update.UpdateApplicantRequest;
+import com.tobeto.bootcampProject.core.utilities.paging.PageDto;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/applicants")
 @AllArgsConstructor
-public class ApplicantController {
+public class ApplicantController extends BaseController {
+
     private ApplicantService applicantService;
 
-    @Autowired
-    private ApplicantService  upplicantService;
-
-    @PostMapping()
-    public CreateApplicantResponse add(@RequestBody CreateApplicantRequest  request){
-        CreateApplicantResponse  result =applicantService.add(request);
-        return  result;
-    }
-    @GetMapping("getallapplicants")
-    public List<GetAllApplicantResponse> getAllApplicant(){
-        return applicantService.getAllApplicant();
+    @PostMapping
+    public ResponseEntity<?> add(@RequestBody @Valid CreateApplicantRequest request) {
+        return handleDataResult(applicantService.add(request));
     }
 
-    @GetMapping("getByAbout/{about}")
-    public GetApplicantResponse  getByAbout(@PathVariable String about){
-        return applicantService.getByAbout(about);
+    @GetMapping("getAll")
+    public ResponseEntity<?> getAll() {
+        return handleDataResult(applicantService.getAll());
     }
 
+    @GetMapping("getById/{id}")
+    public ResponseEntity<?> getById(@PathVariable int id) {
+        return handleDataResult(applicantService.getById(id));
+    }
 
+    @DeleteMapping("delete/{id}")
+    public ResponseEntity<?> delete(@PathVariable int id) {
+        return handleResult(applicantService.delete(id));
+    }
 
+    @PutMapping("update")
+    public ResponseEntity<?> update(@RequestBody @Valid UpdateApplicantRequest request) {
+        return handleDataResult(applicantService.update(request));
+    }
 
+    @GetMapping("sort")
+    public ResponseEntity<?> getAllPage(@RequestBody PageDto pageDto) {
+        return handleDataResult(applicantService.getAllPage(pageDto));
+    }
 }
