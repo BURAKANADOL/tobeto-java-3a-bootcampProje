@@ -20,12 +20,12 @@ public class ApplicationController extends BaseController {
         return handleDataResult(applicationService.add(request));
     }
 
-    @GetMapping("getall")
+    @GetMapping("getAll")
     public ResponseEntity<?> getAll() {
         return handleDataResult(applicationService.getAll());
     }
 
-    @GetMapping("getbyid/{id}")
+    @GetMapping("getById/{id}")
     public ResponseEntity<?> getById(@PathVariable int id) {
         return handleDataResult(applicationService.getById(id));
     }

@@ -72,7 +72,7 @@ public class InstructorManager implements InstructorService {
     private  void checkfBrandNameExists(String name){
         Instructor instructor= (Instructor) instructorRepository.findByNameIgnoreCase(name);
         if (instructor!=null){
-            throw  new BusinessException("boyle bir egitmen daha önce eklendi");
+            throw  new BusinessException("böyle bir eğitmen daha önce eklendi");
         }
     }
 

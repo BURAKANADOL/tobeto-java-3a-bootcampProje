@@ -6,16 +6,13 @@ import com.tobeto.bootcampProject.business.request.update.UpdateBootcampRequest;
 import com.tobeto.bootcampProject.business.response.create.CreateBootcampResponse;
 import com.tobeto.bootcampProject.business.response.get.bootcamp.GetAllBootcampResponse;
 import com.tobeto.bootcampProject.business.response.get.bootcamp.GetBootcampResponse;
-import com.tobeto.bootcampProject.business.response.get.bootcampState.GetBootcampStateResponse;
 import com.tobeto.bootcampProject.business.response.update.UpdateBootcampResponse;
 import com.tobeto.bootcampProject.core.utilities.mapping.ModelMapperService;
 import com.tobeto.bootcampProject.core.utilities.paging.PageDto;
 import com.tobeto.bootcampProject.core.utilities.results.DataResult;
 import com.tobeto.bootcampProject.core.utilities.results.Result;
-import com.tobeto.bootcampProject.dataAccess.abstracts.ApplicationStateRepository;
 import com.tobeto.bootcampProject.dataAccess.abstracts.BootcampRepository;
 import com.tobeto.bootcampProject.entities.concretes.Bootcamp;
-import com.tobeto.bootcampProject.entities.concretes.BootcampState;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

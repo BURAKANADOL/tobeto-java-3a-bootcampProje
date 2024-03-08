@@ -1,7 +1,6 @@
 package com.tobeto.bootcampProject.core.exception.handlers;
 
 import com.tobeto.bootcampProject.core.exception.problemDetails.BusinessProblemDetails;
-import com.tobeto.bootcampProject.core.exception.problemDetails.InternalServerErrorProblemDetail;
 import com.tobeto.bootcampProject.core.exception.problemDetails.ValidationProblemDetails;
 import com.tobeto.bootcampProject.core.exception.types.BusinessException;
 import com.tobeto.bootcampProject.core.exception.types.DataIntegrityViolationException;
